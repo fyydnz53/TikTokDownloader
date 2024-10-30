@@ -69,11 +69,17 @@ class Extractor:
             return {}
 
     def get_user_info_tiktok(self, data: dict) -> dict:
+        """
+        {"stats":{"diggCount":0,"followerCount":4600000,"followingCount":2,"friendCount":0,"heart":426100000,"heartCount":426100000,"videoCount":959},"user":{"avatarLarger":"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7330496653457260550~c5_1080x1080.jpeg?lk3s=a5d48078&nonce=16041&refresh_token=c6a0d3364720b9bfe5837b6852303dd2&x-expires=1730383200&x-signature=BwhQfDFk3H5K2kK5jOccykxk%2FLg%3D&shp=a5d48078&shcp=81f88b70","avatarMedium":"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7330496653457260550~c5_720x720.jpeg?lk3s=a5d48078&nonce=55732&refresh_token=5e97d7017e5cc661a385e255824a897c&x-expires=1730383200&x-signature=0%2FjL7b5NparLVEY9g2Z%2FnwSrmeI%3D&shp=a5d48078&shcp=81f88b70","avatarThumb":"https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/7330496653457260550~c5_100x100.jpeg?lk3s=a5d48078&nonce=13822&refresh_token=433f3824f4ba72483d56af5c0fb9d82d&x-expires=1730383200&x-signature=WDvHczvoOtlDZzswQ%2BhQYEZ%2BOeo%3D&shp=a5d48078&shcp=81f88b70","bioLink":{"link":"https://emotionalclub.com","risk":3},"canExpPlaylist":true,"commentSetting":0,"commerceUserInfo":{"category":"Shopping & Retail","categoryButton":false,"commerceUser":true},"downloadSetting":0,"duetSetting":0,"followingVisibility":1,"ftc":false,"id":"6711764314392691717","isADVirtual":false,"isEmbedBanned":false,"nickname":"FJerry","openFavorite":false,"privateAccount":false,"profileEmbedPermission":1,"profileTab":{"showPlayListTab":true},"relation":0,"secUid":"MS4wLjABAAAAMfQ7hVQQRIn8WFoDslT5rpXZCEtTfPDMWL0wvPqM-8JNXi1uNu75KuiIG3FGlJ83","secret":false,"signature":"Best vids on the internet!\nShop Merch👇","stitchSetting":0,"ttSeller":true,"uniqueId":"fjerry","verified":true}}
+        """
         try:
             return {
                 "nickname": data["user"]["nickname"],
+                "unique_id": data["user"]["uniqueId"],
                 "sec_uid": data["user"]["secUid"],
                 "uid": data["user"]["id"],
+                "biolink": data["user"]["bioLink"],
+                "videoCount":data["stats"]["videoCount"]
             }
         except (KeyError, TypeError):
             self.log.error(f"提取账号信息失败: {data}")
